@@ -11,13 +11,50 @@ It {
 	main (String[] args)
 	{
 		Date date;
-		var it=new Days (2023, 0);
-		while ((date=it.next_date ())!=null)
+
+		var it=new All (2023);
+
+		while ((date=it.next ())!=null)
 		{
 			System.out.println (date);
 		}
 	}
 }
+
+class All implements Iterator<Date>
+{
+	private int year;
+	private int cur_month;
+	private Days it;
+
+	public All (int year)
+	{
+		this.year=year;
+		this.cur_month=0;
+		it=new Days (year, cur_month);
+	}
+	public Date next()
+	{
+		Date date=it.next ();
+
+		if (date==null)
+		{
+			it=new Days (year, cur_month+1);
+			cur_month++;
+		}
+
+		return date;
+	}
+
+	public boolean hasNext ()
+	{
+		if (it.hasNext ()==false && cur_month>=12) // Remember the month ends at 11 since 11 is 12.
+		{
+			return false;
+		}
+		return true;
+	}
+};
 
 class Days implements Iterator<Date>
 {
