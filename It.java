@@ -35,7 +35,7 @@ class All implements Iterator<Date>
 	}
 	public Date next()
 	{
-		Date date=it.next ();
+		Date date=it.next_date ();
 
 		if (date==null)
 		{
@@ -48,7 +48,8 @@ class All implements Iterator<Date>
 
 	public boolean hasNext ()
 	{
-		if (it.hasNext ()==false && cur_month>=12) // Remember the month ends at 11 since 11 is 12.
+		if ((it.hasNext ()==false)
+			&& (cur_month>=12)) // Remember the month ends at 11 since 11 is 12.
 		{
 			return false;
 		}
